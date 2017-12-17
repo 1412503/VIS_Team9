@@ -1,6 +1,10 @@
 use BDTT
 go
 
+delete 
+from Cargo_Statistic
+go
+
 --service = 1 is rcs
 insert into Cargo_Statistic(Service, Duration)
 (select  1 as Service, (c.i1_rcs_p - c.i1_rcs_p) as Duration
