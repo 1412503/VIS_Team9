@@ -1,0 +1,26 @@
+Event Handlers for mouse
+http://bl.ocks.org/WilliamQLiu/76ae20060e19bf42d774
+
+Effect in D3
+https://www.visualcinnamon.com/2016/05/real-life-motion-effects-d3-visualization.html
+
+Xem cho vui
+https://bl.ocks.org/mbostock/1256572
+
+Brush and zoom
+https://bl.ocks.org/mbostock/34f08d5e11952a80609169b7917d4172
+
+http://duspviz.mit.edu/d3-workshop/transitions-animation/
+
+hide or show
+http://bl.ocks.org/d3noob/5d621a60e2d1d02086bf
+--------------------------------
+
+Donut Chart: http://zeroviscosity.com/d3-js-step-by-step/step-3-adding-a-legend
+Funnel chart:	http://bl.ocks.org/ronakrrb/e8d3e6644e2acaf1d3b2; 		https://github.com/jakezatecky/d3-funnel
+Histogram: https://bl.ocks.org/mbostock/3048450;			https://bl.ocks.org/mbostock/1933560
+Bar chart: http://vegibit.com/create-a-bar-chart-with-d3-javascript/
+Scatter plot: http://bl.ocks.org/bunkat/2595950;			http://bl.ocks.org/josiahdavis/a3534073492ca37b3682
+----
+Interaction: https://github.com/alignedleft/d3-book/tree/master/chapter_10
+			
