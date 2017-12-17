@@ -1,3 +1,11 @@
+d3.csv("data/Cargo_Statistic.csv", function(data){
+	data.forEach(function(d){
+		d["Duration"] = +d["Duration"];
+	})
+	console.log(data)
+})
+
+
 
 // // Add an svg element to the DOM 
 // var svg1 = d3.select("#chart-01").append("svg")   
