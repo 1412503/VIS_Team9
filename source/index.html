@@ -40,7 +40,30 @@
 	    <!-- Phần 2 -->
 		<div class="row">
 			<div class="col-sm-12">
-				<p>Tiêu chí: ngày/giờ(radio button) và dịch vụ (combobox)</p>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-3">
+					<span>
+						<input type="radio" checked="checked" value = 0 name = "status">
+						<label style="margin-left: 1%"> Sớm</label>
+						<input type="radio" value= 1 style="margin-left: 10%" name = "status">
+						<label style="margin-left: 1%"> Trễ</label>
+					</span>
+				</div>
+				<div class="col-sm-2" style="margin:center">
+					<select id="cbbService" style="width: 150px">
+						<option value = 0 selected="selected">Tất cả</option>
+						<option value = 1>RCS</option>
+						<option value = 2>DEP</option>
+						<option value = 3>RCF</option>
+						<option value = 4>DLV</option>
+					</select>
+				</div>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-4">
+					<label id="range_min" style="float: left">1</label>
+					<input type="range" id="bins" value= 1 style="width: 90%;margin-left:2%; display: inline-block;" min = 1 max = 10 step = 1>
+					<label id="range_max" style="float: right;">10</label>
+				</div>
 			</div>
 	      	<div class="col-sm-6">
 	      		<p>Sớm</p>
