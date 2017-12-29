@@ -178,7 +178,6 @@ function clickPieChart(d, i)
 
 // }
 
-
 //Get data
 d3.csv("data/Cargo_Statistic.csv", function(error, data){
 	if (error)
@@ -193,18 +192,20 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 					.entries(data);
 	//console.log(JSON.stringify(status))
 	console.log("status",status);
+	//var services = ['rcs', 'dep', 'rcf', 'dlv'];
 
 	var status_gb_service = d3.nest()
 								.key(function(d) { return d.Status;})
 								//lọc bỏ service = "all"
 								.key(function(d) { return d.Service;})//(d.Service != 0) ? d.Service : null
+								//.sortKeys(d3.descending)
 								.rollup(function(v) { 
 									//return d3.sum(v, function(d){ return d.status});
 									return v.length;
 								})
 								.entries(data);
 	// console.log("status_gb_service: ",JSON.stringify(status_gb_service));
-	// console.log("status_gb_service: ", status_gb_service);
+	console.log("status_gb_service: ", status_gb_service);
 
 	var	array_early_status = []
 		array_ontime_status = [],
@@ -229,19 +230,19 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 		if (value.key == 1)
 		{
 			value.key = "rcs";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values, Math.ceil(Math.sqrt(value.values)));
 			array_ontime_status.push(temp);
 		}
 		else if (value.key == 2)
 		{
 			value.key = "dep";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values, Math.ceil(Math.sqrt(value.values)));
 			array_ontime_status.push(temp);
 		}
 		else if (value.key == 3)
 		{
 			value.key = "rcf";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values, Math.ceil(Math.sqrt(value.values)));
 			array_ontime_status.push(temp);
 		}
 		else if (value.key == 4)
@@ -250,9 +251,11 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 			temp.push(value.key, value.values);
 			array_ontime_status.push(temp);
 		}	
-
 	});
-	// console.log(ontime_status_value);
+	
+	console.log("array_ontime_status", array_ontime_status);
+	console.log("array_ontime_status", array_ontime_status[2][1]);
+
 	//Load data have status = "early" group by service
 	status_gb_service[1].values.forEach(function(value){
 		var temp = [];
@@ -260,19 +263,19 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 		if (value.key == 1)
 		{
 			value.key = "rcs";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values, Math.ceil(Math.sqrt(value.values)));
 			array_early_status.push(temp);
 		}
 		else if (value.key == 2)
 		{
 			value.key = "dep";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values, Math.ceil(Math.sqrt(value.values)));
 			array_early_status.push(temp);
 		}
 		else if (value.key == 3)
 		{
 			value.key = "rcf";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values,Math.ceil(Math.sqrt(value.values)));
 			array_early_status.push(temp);
 		}
 		else if (value.key == 4)
@@ -282,7 +285,7 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 			array_early_status.push(temp);
 		}	
 	});
-	console.log("array_early_status" ,array_early_status);
+	//console.log("array_early_status" ,array_early_status);
 
 	//Load data have status = "late" group by service
 	status_gb_service[2].values.forEach(function(value){
@@ -291,30 +294,40 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 		if (value.key == 1)
 		{
 			value.key = "rcs";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values, Math.ceil(Math.sqrt(value.values)));
 			array_late_status.push(temp);
 		}
 		else if (value.key == 2)
 		{
 			value.key = "dep";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values, Math.ceil(Math.sqrt(value.values)));
 			array_late_status.push(temp);
 		}
 		else if (value.key == 3)
 		{
 			value.key = "rcf";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values, Math.ceil(Math.sqrt(value.values)));
 			array_late_status.push(temp);
 		}
 		else if (value.key == 4)
 		{
 			value.key = "dlv";
-			temp.push(value.key, value.values);
+			temp.push(value.key, value.values, Math.ceil(Math.sqrt(value.values)));
 			array_late_status.push(temp);
 		}	
 	});
 
-	console.log("array_early_status: ", array_early_status);
+	//Sort data giam dan de ve funnel chart
+	//array_ontime_status.sort();
+	array_ontime_status.sort(function(x, y){
+   		return d3.descending(x[1], y[1]);
+	})
+	array_late_status.sort(function(x, y){
+   		return d3.descending(x[1], y[1]);
+	})
+	array_early_status.sort(function(x, y){
+   		return d3.descending(x[1], y[1]);
+	})
 
 	//Load pie chart
 	Load_PieChart(status);
@@ -337,7 +350,7 @@ function Load_FunnelChartEarly(data)
 				.attr("id", "funnelContainer");
 	//var ntt = [['Video Views', 1500], ['Comments', 300], ['Video Responses', 150]];
 	var chart = new FunnelChart({
-	    			data: data.sort(),
+	    			data: data,
 	    			width: width_funnel, 
 	    			height: height_funnel, 
 	    			bottomPct: 1/4
@@ -351,7 +364,7 @@ function Load_FunnelChartLate(data)
 				.append("div")
 				.attr("id", "funnelContainer1");
 	var chart = new FunnelChart({
-	    			data: data.sort(),
+	    			data: data,
 	    			width: width_funnel, 
 	    			height: height_funnel, 
 	    			bottomPct: 1/4
@@ -365,7 +378,7 @@ function Load_FunnelChartOnTime(data)
 				.append("div")
 				.attr("id", "funnelContainer3");
 	var chart = new FunnelChart({
-	    			data: data.sort(),
+	    			data: data,
 	    			width: width_funnel, 
 	    			height: height_funnel, 
 	    			bottomPct: 1/4
@@ -377,9 +390,4 @@ function Load_FunnelChartOnTime(data)
 function clickFunelChart()
 {
 	d3.select(this).style("opacity", 0.2);
-
 }
-
-
-
-
