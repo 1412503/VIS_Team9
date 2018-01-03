@@ -18,7 +18,12 @@ var yValue = function(d) { return d["ratio_late"];}, // data -> value
 
 // setup fill color ứng với từng service
 var cValue = function(d) { return d.type;},
-    color = d3.scale.category10(); //tham khảo link https://github.com/d3/d3-scale/blob/master/README.md#schemeCategory10
+	color = d3.scale.ordinal()
+		//this assumes you have 3 groups of data//﻿each of the domains corresponds to a color set
+        .domain(["DEP", "RCF"])
+        .range(["blue", "red"]);
+    // hoặc color = d3.scale.category10(); //tham khảo link https://github.com/d3/d3-scale/blob/master/README.md#schemeCategory10
+     
 
 // add the graph canvas to the body of the webpage
 var svg = d3.select("#chart-05").append("svg")
