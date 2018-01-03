@@ -148,6 +148,7 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 	      .attr("x", width) //vị trí của text so với gốc tọa độ
 	      .attr("y", -6) //vị trí text so với trục tọa độ (-) nằm bên trái, (+) nằm bên phải
 	      .style("text-anchor", "end") //kết thúc của text là điểm (gồm: start/middle/end)
+	      .style("font-size", "14px")
 	      .text("Số lượng đến sân bay");
 
 	  // y-axis
@@ -157,10 +158,11 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 	      .append("text")
 	      .attr("class", "label")
 	      .attr("transform", "rotate(-90)") // trục y góc 90 với trục x
-	      .attr("y", -40) //vị trí text so với trục tọa độ (-) nằm bên trái, (+) nằm bên phải
+	      .attr("y", -50) //vị trí text so với trục tọa độ (-) nằm bên trái, (+) nằm bên phải
 	      .attr("dy", ".71em") //vị trí của text so với gốc tọa độ
 	      .style("text-anchor", "end") //kết thúc của text là điểm (gồm: start/middle/end)
-	      .text("Phần trăm trễ");
+	      .style("font-size", "14px")
+	      .text("Tỉ lệ trễ (%)");
 
 	  // draw dots
 	  svg.selectAll(".dot")
