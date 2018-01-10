@@ -169,7 +169,7 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 	      .data(count_result)
 	      .enter().append("circle")
 	      .attr("class", "dot")
-	      .attr("r", 4)
+	      .attr("r", 3)
 	      .attr("cx", xMap)
 	      .attr("cy", yMap)
 	      .style("fill", function(d) { return color(cValue(d));}) //tô màu dot ứng với từng service
