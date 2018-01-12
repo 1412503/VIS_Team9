@@ -109,7 +109,7 @@ function ScatterPlot(count_result)
 {
 	var w = $('#chart-05').width();
 	h = 0.3*w
-	var margin = {top: 20, right: 0.05*w, bottom: 30, left:  0.05*w},
+	var margin = {top: 20, right: 0.15*w, bottom: 30, left:  0.15*w},
 	    width = w - margin.left - margin.right,
 	    height = h - margin.top - margin.bottom;
 
@@ -260,6 +260,21 @@ function ScatterPlot(count_result)
 	function transform(d) 
 	{
 	    return "translate(" + xScale(xValue(d)) + "," + yScale(yValue(d))+ ")";
+	}
+
+	d3.select("#Reset").on("click", clickButton);
+
+	function clickButton()
+	{
+		xScale.domain([d3.min(count_result, xValue)-1, d3.max(count_result, xValue)+1]);
+	  	yScale.domain([d3.min(count_result, yValue)-1, d3.max(count_result, yValue)+1]);
+	  	xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+	  	yAxis = d3.svg.axis().scale(yScale).orient("left");
+	  	svg.select(".x.axis").call(xAxis);
+	    svg.select(".y.axis").call(yAxis);
+
+		svg.selectAll(".dot")
+	        .attr("transform", transform); 
 	}
 }
 
