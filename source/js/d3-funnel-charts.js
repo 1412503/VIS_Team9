@@ -222,10 +222,10 @@
       count++;
       if (count == 1)
       {
-         d3.selectAll(".funnel").style("opacity", "0.2");
+         d3.selectAll(".funnel").style("opacity", "0.2").style("pointer-events", "none");
           //d3.select(this.parentNode).selectAll(".funnel").style("opacity", "0.2");
           //d3.select("#chart-11").selectAll(".funnel").style("opacity", "0.2");
-          d3.select(this).style("opacity", 1);
+          d3.select(this).style("opacity", 1).style("pointer-events", "visible");
           //console.log("click:", d3.select(this.parentNode.parentNode.parentNode).attr("id") == "funnelContainer");
           // if (d3.select(this.parentNode.parentNode.parentNode).attr("id") == "funnelContainer")
           // {
@@ -251,7 +251,7 @@
       }
       else
       {
-          d3.selectAll(".funnel").style("opacity", 1);
+          d3.selectAll(".funnel").style("opacity", 1).style("pointer-events", "visible");
           //d3.select(this.parentNode).selectAll(".funnel").style("opacity", 1);
           count = 0;
           // tooktipFunnel.style("opacity", 0);
