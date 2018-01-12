@@ -1,0 +1,56 @@
+ div.tooltip 
+        {	
+		    position: absolute;			
+		    text-align: left;			
+		    width: auto;					
+		    height: auto;					
+		    padding: 5px;				
+		    font: 12px sans-serif;		
+		    background: lightsteelblue;	
+		    border: 0px;		
+		    border-radius: 8px;			
+		    pointer-events: none;	
+		    z-index: 10;		
+		}
+
+.tooltip:after {
+ 	margin-top: -2px;
+  	bottom: 0;
+ 	left: 50%;
+  	margin-left: -5px;
+  	border-top: 5px solid #000000;
+  	border-right: 5px solid transparent;
+  	border-left: 5px solid transparent;
+}
+
+.col-sm-8 p
+{
+	font-weight: bold;
+	font-size: 18px;
+	text-align: center;
+}
+
+#chart-11 
+{
+	color: #8bc34a;
+	text-align: center;
+}
+
+
+#chart-12 
+{
+	color: #ff7f0e;
+	text-align: center;
+}
+
+
+#chart-13 
+{
+	color: #00bcd4;
+	text-align: center;
+}
+
+#chart-11-legend
+{
+	text-align: center;
+}
