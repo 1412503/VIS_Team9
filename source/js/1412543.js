@@ -122,40 +122,47 @@ function Load_PieChart(data)
 			     		count_click++;
 						if (count_click == 1)
 						{
-							d3.selectAll(".arc").style("opacity", 0.1);
-							d3.select(this).style("opacity", 1.0);
+							d3.selectAll(".arc").style("opacity", 0.1).style("pointer-events", "none");
+							d3.select(this).style("opacity", 1.0).style("pointer-events", "visible");
 
 				        //Khi click vào phần nào của pie chart thì hiển thị thông tin tương ứng của chart đó bên phải
 				        if (d.data.key == "Sớm")
 				        {
 				        	d3.select("#chart-12")
-				        		.style("opacity", 0.1);
+				        		.style("opacity", 0.1)
+				        		.style("pointer-events", "none")
+
 				        		//.selectAll(".arc")
 				        		//.on('click', false);
 				        		//.classed("hide", true);
 				        	d3.select("#chart-13")
 				        		.style("opacity", 0.1)
-				        		.on('click', null);
+				        		.style("pointer-events", "none");
 				        }
 				       	else if (d.data.key == "Trễ")
 				       	{
 				       		d3.select("#chart-11")
-				        		.style("opacity", 0.1);
+				        		.style("opacity", 0.1)
+				        		.style("pointer-events", "none");
 				        	d3.select("#chart-13")
-				        		.style("opacity", 0.1);
+				        		.style("opacity", 0.1)
+				        		.style("pointer-events", "none");
 				       	}
 				        else 
 				        { 
 				        	d3.select("#chart-11")
-				        		.style("opacity", 0.1);
+				        		.style("opacity", 0.1)
+				        		.style("pointer-events", "none");
 				        	d3.select("#chart-12")
-				        		.style("opacity", 0.1);
+				        		.style("opacity", 0.1)
+				        		.style("pointer-events", "none");
 				        }
 					}
 					else if (count_click == 2)
 					{
 						d3.selectAll(".arc")
 							.style("opacity",1.0)
+							.style("pointer-events", "visible")
 							.select("path")
 							.transition()
 							.duration(500)
@@ -167,11 +174,14 @@ function Load_PieChart(data)
 
 						//Bỏ làm mờ các chart bên phải
 						d3.select("#chart-11")
-				        		.style("opacity", 1);
+				        		.style("opacity", 1)
+				        		.style("pointer-events", "visible");
 						d3.select("#chart-12")
-				        		.style("opacity", 1);
+				        		.style("opacity", 1)
+				        		.style("pointer-events", "visible");
 						d3.select("#chart-13")
-				        		.style("opacity", 1);
+				        		.style("opacity", 1)
+				        		.style("pointer-events", "visible");
 					}
 			     }); 
 
