@@ -39,6 +39,11 @@
     return this.data[ind][1];
   };
 
+  window.FunnelChart.prototype._getColor = function(ind){
+    /* Get engagement value of a category at index 'ind' in this.data */
+    return this.data[ind][3];
+  };
+
   window.FunnelChart.prototype._createPaths = function(){
     /* Returns an array of points that can be passed into d3.svg.line to create a path for the funnel */
     trapezoids = [];
@@ -59,7 +64,7 @@
       nextRightX = prevRightX - slope;
       //nextHeight = chart._slope * (prevBaseLength-nextBaseLength)/2 + prevHeight;
       nextHeight = height + prevHeight;
-      console.log("nextRightX:", nextRightX);
+      //console.log("nextRightX:", nextRightX);
 
       points = [[nextRightX, nextHeight]];
       points.push([prevRightX, prevHeight]);
@@ -83,6 +88,37 @@
               .attr('width', this.width)
               .attr('height', this.height)
               .append('g');
+    // filters go in defs element
+    var defs = funnelSvg.append("defs");
+
+    var filter = defs.append("filter")
+                    .attr("id", "drop-shadow")
+                    .attr("width", "200%")
+                     .attr("height", "200%");
+
+    // SourceAlpha refers to opacity of graphic that this filter will be applied to
+    // convolve that with a Gaussian with standard deviation 3 and store result
+    // in blur
+    filter.append("feGaussianBlur")
+        .attr("in", "SourceAlpha")
+        .attr("stdDeviation", 5)
+        .attr("result", "blur");
+
+    // translate output of Gaussian blur to the right and downwards with 2px
+    // store result in offsetBlur
+    filter.append("feOffset")
+        .attr("in", "blur")
+        .attr("dx", 3)
+        .attr("dy", 3)
+        .attr("result", "offsetBlur");
+    // overlay original SourceGraphic over translated blurred opacity by using
+    // feMerge filter. Order of specifying inputs is important!
+    var feMerge = filter.append("feMerge");
+
+    feMerge.append("feMergeNode")
+          .attr("in", "offsetBlur")
+    feMerge.append("feMergeNode")
+          .attr("in", "SourceGraphic");
 
     // Creates the correct d3 line for the funnel
     var funnelPath = d3.svg.line()
@@ -90,48 +126,143 @@
                     .y(function(d) { return d[1]; });
 
     // Automatically generates colors for each trapezoid in funnel
-    var colorScale = d3.scale.category10();
+    //var colorScale = d3.scale.category20();
 
     var paths = this._createPaths();
 
     function drawTrapezoids(funnel, i){
-      var trapezoid = funnelSvg
-                      .append('path')
-                      .attr('d', function(d){
-                        return funnelPath(
-                            [paths[i][0], paths[i][1], paths[i][2],
-                            paths[i][2], paths[i][1], paths[i][2]]);
-                      })
-                      .attr('fill', '#fff');
+      //console.log("ntt", funnel.totalEngagement);
+      var g = funnelSvg.append("g")
+                        .attr("class", "funnel")
+                        .on("mouseover", function(d){
+                            d3.select(this).select("path")
+                              .transition()
+                              .duration(100)
+                              .style("filter", "url(#drop-shadow)")
+                              .attr("transform", "translate(-3,-3)")
+                              .attr("stroke-width", 3);
 
+                              //Lấy thông tin phân pie khi click vào
+                              tooktipFunnel.transition()    
+                                           .duration(100)  
+                                           .style("opacity", 0.9);
+
+                              tooktipFunnel.html("<strong>Service:</strong>" + d3.select(this).select("#label").attr("value") + "</br>"
+                                            +"<strong>Count:</strong>"+ d3.select(this).select("#value").attr("value"))
+                                      .style("left", (d3.event.pageX) + "px")   
+                                      .style("top", (d3.event.pageY) - 113 + "px"); 
+                        })
+                        .on("mouseout", function(d)
+                        {
+                            d3.select(this).select("path")
+                              .transition()
+                              .duration(100)
+                               .style("filter", null)
+                              .attr("stroke-width", 1)
+                              .attr("transform", null);
+
+                            tooktipFunnel.transition()
+                                          .duration(100)
+                                           .style("opacity", 0);
+                        })
+                        .on("click", clickOnFunnelChart); 
+
+      var trapezoid = g.append('path')
+                        .attr('d', function(d){
+                            return funnelPath(
+                                [paths[i][0], paths[i][1], paths[i][2],
+                                paths[i][2], paths[i][1], paths[i][2]]);
+                            })
+                        .attr('fill', '#fff')
+                        .attr('stroke', '#fff');                      
+                                                
       nextHeight = paths[i][[paths[i].length]-1];
 
-      var totalLength = trapezoid.node().getTotalLength();
+      //var totalLength = trapezoid.node().getTotalLength();
 
-      var transition = trapezoid
-                      .transition()
-                        .duration(totalLength/speed)
-                        .ease("linear")
-                        .attr("d", function(d){return funnelPath(paths[i]);})
-                        .attr("fill", function(d){return colorScale(i);});
+      var transition = trapezoid.transition()
+                                //.duration(totalLength/speed)
+                                .ease("linear")
+                                .attr("d", function(d){return funnelPath(paths[i]);})
+                                //.attr("fill", function(d){return colorScale(i);});
+                                .attr("fill", function(d){return funnel._getColor(i) ;});
+     
+      g.append('text')
+                //.text(funnel._getLabel(i) + ': ' + funnel._getEngagementCount(i))
+                .text(Math.round(funnel._getEngagementCount(i)/funnel.totalEngagement*100*10)/10 + "%")
+                .attr("x", function(d){ return funnel.width/2; })
+                .attr("y", function(d){
+                  return (paths[i][0][1] + paths[i][1][1])/2;}) // Average height of bases
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "middle")
+                .attr("font-size", "12px")
+                .attr("fill", "#fff");
 
-      funnelSvg
-      .append('text')
-      .text(funnel._getLabel(i) + ': ' + funnel._getEngagementCount(i))
-      .attr("x", function(d){ return funnel.width/2; })
-      .attr("y", function(d){
-        return (paths[i][0][1] + paths[i][1][1])/2;}) // Average height of bases
-      .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "middle")
-      .attr("fill", "#fff");
+                if(i < paths.length - 1){
+                  transition.each('end', function(){
+                    drawTrapezoids(funnel, i+1);
+                  });
+                }
 
-      if(i < paths.length - 1){
-        transition.each('end', function(){
-          drawTrapezoids(funnel, i+1);
-        });
+      g.append("p").attr("id", "label").attr("value", funnel._getLabel(i));
+      g.append("p").attr("id", "value").attr("value", funnel._getEngagementCount(i))
+      }
+
+    drawTrapezoids(this, 0);
+
+
+  };
+})();
+
+
+    var count = 0;
+    function clickOnFunnelChart(d)
+    {
+      //console.log("ntt: ", d3.select(this).select("#label").attr("value"));
+      count++;
+      if (count == 1)
+      {
+         d3.selectAll(".funnel").style("opacity", "0.2");
+          //d3.select(this.parentNode).selectAll(".funnel").style("opacity", "0.2");
+          //d3.select("#chart-11").selectAll(".funnel").style("opacity", "0.2");
+          d3.select(this).style("opacity", 1);
+          //console.log("click:", d3.select(this.parentNode.parentNode.parentNode).attr("id") == "funnelContainer");
+          // if (d3.select(this.parentNode.parentNode.parentNode).attr("id") == "funnelContainer")
+          // {
+          //     //d3.selectAll(".arc").style("opacity", 0.1);
+          //     d3.select("#chart-01").select(".arc:nth-child(1)")
+          //       //.select("path:nth-child(1)")
+          //       //.transition()
+          //       //.duration(500)
+          //       //.style("filter", "url(#drop-shadow)")
+          //       //.attr("stroke-width", 2)
+          //       .style("opacity", 0.2);
+          // }                                                            
+
+          // //Lấy thông tin phân pie khi click vào
+          // tooktipFunnel.transition()    
+          //        .duration(100)  
+          //        .style("opacity", 0.9);
+
+          // tooktipFunnel.html("<strong>Service:</strong>" + d3.select(this).select("#label").attr("value") + "</br>"
+          //               +"<strong>Count:</strong>"+ d3.select(this).select("#value").attr("value"))
+          //         .style("left", (d3.event.pageX) + "px")   
+          //         .style("top", (d3.event.pageY) - 113 + "px"); 
+      }
+      else
+      {
+          d3.selectAll(".funnel").style("opacity", 1);
+          //d3.select(this.parentNode).selectAll(".funnel").style("opacity", 1);
+          count = 0;
+          // tooktipFunnel.style("opacity", 0);
+          // d3.select("#chart-01").selectAll(".arc")
+          //       .style("opacity", 1);
       }
     }
 
-    drawTrapezoids(this, 0);
-  };
-})();
+
+
+
+
+
+
