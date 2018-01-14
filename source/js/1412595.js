@@ -1,4 +1,4 @@
-var color = "#D47300";
+var color = "#00AE56";
 
 function Histogram(data, idchart)
 {
@@ -46,13 +46,29 @@ function Histogram(data, idchart)
     			.data(histogram)
   				.enter().append("g")
     			.attr("class", "bar")
-    			.attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });   
+    			.attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; })
+    			.attr("cursor", "pointer")
+    			.on("mouseover", function(d, i)
+    			{
+						d3.select(this).select("rect")
+							.transition()
+							.duration(500)
+							.attr("stroke", "#fff")
+							.attr("stroke-width", 2);
+				})
+				.on("mouseout", function(d)
+				{
+			     	     d3.select(this).select("rect")
+			     	     	.transition()
+							.duration(500)
+							.attr("stroke", null);
+			    }) ; 
 
     bar.append("rect")
 		.attr("x", 1)
 		.attr("width", (x(histogram[0].dx) - x(0)) - 1)
 		.attr("height", function (d) { return height - y(d.y); })
-		.attr("fill", function(d) { return colorScale(d.y) })
+		.attr("fill", function(d) { return colorScale(d.y) });
 
 	bar.append("text")
 		.attr("x", (x(histogram[0].dx) - x(0)) / 2)
@@ -146,6 +162,7 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 	//Histogram(data_all_early_rcf, "#chart-03");
 
 	// Histogram số lượng chuyến sớm theo dlv
+	console.log("data_all_early_dlv", data_all_early_dlv);
 	Histogram(data_all_early_dlv, "#chart-03");
 
 
