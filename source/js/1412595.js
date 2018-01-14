@@ -106,7 +106,11 @@ function Histogram(data, idchart, color)
 	      .append("text")
 	      .attr("class", "label")
 	      .attr("transform", "rotate(-90)")
+<<<<<<< HEAD
 	      .attr("y", -50)
+=======
+	      .attr("y", -70)
+>>>>>>> 6072c2a70cb612f49441e9daeec9afc101fbb9e7
 	      .attr("dy", ".71em")
 	      .style("text-anchor", "end")
 	      .style("font-size", "10px")
@@ -114,92 +118,5 @@ function Histogram(data, idchart, color)
 
 };
 
-d3.csv("data/Cargo_Statistic.csv", function(error, data){
-	if (error)
-		throw error;
-	// Lấy tất cả chuyến sớm
-	var data_all_early = data.filter(function(row){
-		return row['Status'] == -1;
-	})
-	// Lấy tất cả chuyến trễ
-	var data_all_late = data.filter(function(row){
-		return row['Status'] == 1;
-	})
-
-	// Lấy chuyến sớm theo rcs
-	var data_all_early_rcs = data_all_early.filter(function(row)
-	{
-		return row['Service'] == 1;
-	})
-	// Lấy chuyến sớm theo dep
-	var data_all_early_dep = data_all_early.filter(function(row)
-	{
-		return row['Service'] == 2;
-	})
-	// Lấy chuyến sớm theo rcf
-	var data_all_early_rcf = data_all_early.filter(function(row)
-	{
-		return row['Service'] == 3;
-	})
-	// Lấy chuyến sớm theo dlv
-	var data_all_early_dlv = data_all_early.filter(function(row)
-	{
-		return row['Service'] == 4;
-	})
-
-	// Lấy chuyến trễ theo rcs
-	var data_all_late_rcs = data_all_late.filter(function(row)
-	{
-		return row['Service'] == 1;
-	})
-	// Lấy chuyến trễ theo dep
-	var data_all_late_dep = data_all_late.filter(function(row)
-	{
-		return row['Service'] == 2;
-	})
-	// Lấy chuyến trễ theo rcf
-	var data_all_late_rcf = data_all_late.filter(function(row)
-	{
-		return row['Service'] == 3;
-	})
-	// Lấy chuyến trễ theo dlv
-	var data_all_late_dlv = data_all_late.filter(function(row)
-	{
-		return row['Service'] == 4;
-	})
-	
-	// Histogram số lượng chuyến sớm theo thời gian
-	Histogram(data_all_early, "#chart-03", color1);
-
-	// Histogram số lượng chuyến sớm của rcs
-	//Histogram(data_all_early_rcs, "#chart-03", color1);
-
-	// Histogram số lượng chuyến sớm theo dep
-	//Histogram(data_all_early_dep, "#chart-03", color1);
-
-	// Histogram số lượng chuyến sớm theo rcf
-	//Histogram(data_all_early_rcf, "#chart-03", color1);
-
-	// Histogram số lượng chuyến sớm theo dlv
-
-	//Histogram(data_all_early_dlv, "#chart-03", color1);
-
-
-	/* //Histogram số lượng chuyến trễ theo thời gian
-	Histogram(data_all_late, "#chart-04", color2);
-
-	// Histogram số lượng chuyến trễ của rcs
-	Histogram(data_all_late_rcs, "#chart-04", color2);
-
-	// Histogram số lượng chuyến trễ theo dep
-	Histogram(data_all_late_dep, "#chart-04", color2);
-
-	// Histogram số lượng chuyến trễ theo rcf
-	Histogram(data_all_late_rcf, "#chart-04", color2);*/
-
-	// Histogram số lượng chuyến trễ theo dlv
-	Histogram(data_all_late_dlv, "#chart-04", color2);
-
-});
 
 
