@@ -56,13 +56,28 @@ div.tooltip
 
 .border2
 {
-	margin-top: -25px;
-	height: 360px;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	margin-top: 90px;
+	height: 345px;
 }
 
 .border3
 {
-	height: 450px;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	height: 300px;
+	margin-top: 5px;
+}
+
+.border4
+{
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	margin-top: 5px;
+	margin-left: -15px;
+	margin-right: -15px;
+	margin-top: -5px;
 }
 
 .tick{
