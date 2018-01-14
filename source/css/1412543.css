@@ -52,6 +52,14 @@ div.tooltip
 	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+.border2
+{
+	margin-top: -5px;
+	height: 360px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
 .border3
 {
 	margin-left: 15px;

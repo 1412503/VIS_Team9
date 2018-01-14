@@ -128,7 +128,7 @@ function ScatterPlot(count_result)
 		color = d3.scale.ordinal()
 			//this assumes you have 3 groups of data//﻿each of the domains corresponds to a color set
 	        .domain(["DEP", "RCF"])
-	        .range(["#66CDAA", "#EE82EE"]);
+	        .range(["#66CDAA", "#ffe066"]);
 	    // hoặc color = d3.scale.category10(); //tham khảo link https://github.com/d3/d3-scale/blob/master/README.md#schemeCategory10
 	 
 	  // don't want dots overlapping axis, so add in buffer to data domain

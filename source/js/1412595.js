@@ -13,9 +13,10 @@ function Histogram(data, idchart, color)
 
 	var max = d3.max(map);
 	var min = d3.min(map);
+	console.log(min);
 
 	var x = d3.scale.linear()
-    		.domain([min, max])
+    		.domain([0, max])
       		.range([0, width]);
 
 	var histogram = d3.layout.histogram()
@@ -79,9 +80,13 @@ function Histogram(data, idchart, color)
 		.attr("x", (x(histogram[0].dx) - x(0)) / 2)
 		.attr("y", -12)
 		.attr("dy", ".75em")
-		.attr("fill", "black")
+		.attr("fill", color)
+		.style("font-size", "10px")
+		.style("font-weight", "bold")
 		.attr("text-anchor", "middle")
-		.text(function(d) { return formatCount(d.y); })
+		.text(function(d) { if(formatCount(d.y) != 0) {return formatCount(d.y);} })
+
+
 
     svg.append("g")
 	    .attr("class", "x axis")
@@ -164,7 +169,7 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 	})
 	
 	// Histogram số lượng chuyến sớm theo thời gian
-	//Histogram(data_all_early, "#chart-03", color1);
+	Histogram(data_all_early, "#chart-03", color1);
 
 	// Histogram số lượng chuyến sớm của rcs
 	//Histogram(data_all_early_rcs, "#chart-03", color1);
@@ -177,7 +182,7 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 
 	// Histogram số lượng chuyến sớm theo dlv
 
-	Histogram(data_all_early_dlv, "#chart-03", color1);
+	//Histogram(data_all_early_dlv, "#chart-03", color1);
 
 
 	/* //Histogram số lượng chuyến trễ theo thời gian

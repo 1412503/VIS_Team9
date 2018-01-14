@@ -46,7 +46,7 @@
 
   window.FunnelChart.prototype._getColor = function(ind){
     /* Get engagement value of a category at index 'ind' in this.data */
-    return this.data[ind][4];
+    return this.data[ind][3];
     //return color(ind);
   };
 
@@ -196,7 +196,7 @@
      
       g.append('text')
                 //.text(funnel._getLabel(i) + ': ' + funnel._getEngagementCount(i))
-                .text(funnel._getLabel(i) + ':' + " "+ Math.round(funnel._getEngagementCount(i)/funnel.totalEngagement*100*10)/10 + "%")
+                .text(Math.round(funnel._getEngagementCount(i)/funnel.totalEngagement*100*10)/10 + "%")
                 .attr("x", function(d){ return funnel.width/2; })
                 .attr("y", function(d){
                   return (paths[i][0][1] + paths[i][1][1])/2;}) // Average height of bases

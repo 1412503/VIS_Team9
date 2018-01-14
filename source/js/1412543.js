@@ -46,8 +46,8 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 	//Load data have status = "ontime" group by service
 	var color_rcs = "#7B68EE",
 		color_dep = "#66CDAA",
-		color_rcf = "#EE82EE",
-		color_dlv = "#F4A460";
+		color_rcf = "#ffe066",
+		color_dlv = "#EE82EE";
 
 	var status = [];
 
@@ -196,7 +196,7 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 	//Load funnel chart with status = "ontime"
 	Load_FunnelChartOnTime(array_ontime_status);
 	//Load legend
-	//LegendForFunnel(array_early_status);
+	LegendForFunnel(array_early_status);
 });
 
 function Load_PieChart(data)
@@ -483,8 +483,8 @@ function LegendForFunnel(data)
 {
 	var svg = d3.select("#chart-11-legend")
 					.append("svg")
-					.attr("width", 0.4*w1)
-					.attr("height", 0.5*w1);
+					.attr("width", 0.2*funnel_width)
+					.attr("height", 0.15*funnel_width);
 
 	var legend = svg.selectAll(".legend")
 					.data(data)
