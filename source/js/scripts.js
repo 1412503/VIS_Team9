@@ -130,7 +130,7 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 	//Hien thi chart
 	//Load pie chart
 	Load_PieChart(data_all);
-	LegendForPie(data_all);
+	LegendForPie(data_rcs);
 	//Load funnel chart status = "early"
 
 	Load_FunnelChartRCS(data_rcs);

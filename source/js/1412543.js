@@ -1,13 +1,13 @@
 //var data = [2, 4, 8, 10];
-var pie_width = $('.col-sm-4').width();
+var pie_width = $('.col-sm-3').width();
 
-var	funnel_width = $('.col-sm-8').width();
-var width_funnel = 0.2*funnel_width,
-	height_funnel = 0.2*funnel_width;
+var	funnel_width = $('.col-sm-3').width();
+var width_funnel = 0.45*funnel_width,
+	height_funnel = 0.4*funnel_width;
 //color
 var colorPie = d3.scale.ordinal()
 						.range(["#D47300","#00AE56", "#00CED1", ]);
-var colorLate = "#D47300",
+var colorLate = "#ff944d",
 	colorEarly = "#00AE56",
 	colorOnTime = "#00CED1";
 
@@ -55,7 +55,7 @@ function Load_PieChart(data)
 	})
 	data = result;
 
-	var width = 0.5*pie_width,
+	var width = 0.7*pie_width,
 		height = width,
 		radius = (width-50)/2;
 
@@ -248,7 +248,7 @@ function Load_PieChart(data)
 
 	arcs.append("path")
 		.attr("d", arc) // here the arc function works on every record d of data 
-		.attr("fill", function(d, i){ return colorPie(i); })
+		.attr("fill", function(d){ return d.data[2];})
 		.attr("stroke", "#fff")
 		.attr("stroke-opacity", 1)
 		.attr("fill-opacity", "#000");
@@ -295,7 +295,7 @@ function LegendForPie(data)
 
 	var svgLegend = d3.select("#chart-01-legend")
 					.append("svg")
-					.attr("width", 0.2*pie_width)
+					.attr("width", 0.26*pie_width)
 					.attr("height", 0.5*pie_width);
 
 	var legend = svgLegend.selectAll(".legendPie")
@@ -492,9 +492,9 @@ function Load_FunnelChartDLV(data)
    		return d3.descending(x[1], y[1]);
 	})
 
-	var svg = d3.select("#chart-13")
+	var svg = d3.select("#chart-14")
 				.append("div")
-				.attr("id", "funnelContainer2");
+				.attr("id", "funnelContainer3");
 
 	var chart = new FunnelChart({
 	    			data: result,

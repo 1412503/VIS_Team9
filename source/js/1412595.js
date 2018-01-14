@@ -1,5 +1,5 @@
 var color1 = "#00AE56"
-var color2 = "#D47300";
+var color2 = "#ff944d";
 
 function Histogram(data, idchart, color)
 {
@@ -9,7 +9,7 @@ function Histogram(data, idchart, color)
 
 	var margin = {top: 12, right: 0, bottom: 40, left: 50},
 		width = $(idchart).width() - margin.left - margin.right,
-		height = 0.9*width - margin.top - margin.bottom;
+		height = 0.7*width - margin.top - margin.bottom;
 
 	var max = d3.max(map);
 	var min = d3.min(map);
@@ -74,14 +74,14 @@ function Histogram(data, idchart, color)
 		.attr("x", 1)
 		.attr("width", (x(histogram[0].dx) - x(0)) - 1)
 		.attr("height", function (d) { return height - y(d.y); })
-		.attr("fill", function(d) { return colorScale(d.y) });
+		.attr("fill", color);//function(d) { return colorScale(d.y) });
 
 	bar.append("text")
 		.attr("x", (x(histogram[0].dx) - x(0)) / 2)
 		.attr("y", -12)
 		.attr("dy", ".75em")
 		.attr("fill", color)
-		.style("font-size", "10px")
+		.style("font-size", "8px")
 		.style("font-weight", "bold")
 		.attr("text-anchor", "middle")
 		.text(function(d) { if(formatCount(d.y) != 0) {return formatCount(d.y);} })
@@ -95,7 +95,7 @@ function Histogram(data, idchart, color)
 	      .append("text")
 	      .attr("class", "label")
 	      .attr("x", width)
-	      .attr("y", 35)
+	      .attr("y", 25)
 	      .style("text-anchor", "end")
 	      .style("font-size", "10px")
 	      .text("Thời gian (ngày)");
