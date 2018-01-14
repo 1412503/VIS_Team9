@@ -169,8 +169,7 @@ var count_click_Funnel = 0;
                             tooktipFunnel.transition()
                                           .duration(100)
                                            .style("opacity", 0);
-                        })
-                        .on("click", clickOnFunnelChart); 
+                        });
 
       var trapezoid = g.append('path')
                         .attr('d', function(d){
@@ -219,20 +218,6 @@ var count_click_Funnel = 0;
   };
 })();
 
-    function clickOnFunnelChart(d)
-    {
-      count_click_Funnel++;
-      if (count_click_Funnel == 1)
-      {
-         d3.selectAll(".funnel").style("opacity", "0.2").style("pointer-events", "none");
-         d3.select(this).style("opacity", 1).style("pointer-events", "visible");   
-      }
-      else
-      {
-          d3.selectAll(".funnel").style("opacity", 1).style("pointer-events", "visible");
-          count_click_Funnel = 0;
-      }
-    }
 
 
 

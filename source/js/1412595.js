@@ -74,7 +74,8 @@ function Histogram(data, idchart, color)
 		.attr("x", 1)
 		.attr("width", (x(histogram[0].dx) - x(0)) - 1)
 		.attr("height", function (d) { return height - y(d.y); })
-		.attr("fill", color);//function(d) { return colorScale(d.y) });
+		.attr("fill", color);
+
 
 	bar.append("text")
 		.attr("x", (x(histogram[0].dx) - x(0)) / 2)
