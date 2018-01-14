@@ -1,5 +1,3 @@
-
-
 // add the tooltip area to the webpage
 var tooltip = d3.select("body").append("div") // append vào body để định vị chính xác vị trí con trỏ chuột
     .attr("class", "tooltip")
@@ -109,7 +107,7 @@ function ScatterPlot(count_result)
 {
 	var w = $('#chart-05').width();
 	h = 0.3*w
-	var margin = {top: 20, right: 0.15*w, bottom: 30, left:  0.15*w},
+	var margin = {top: 20, right: 0.1*w, bottom: 30, left:  0.1*w},
 	    width = w - margin.left - margin.right,
 	    height = h - margin.top - margin.bottom;
 
@@ -130,7 +128,7 @@ function ScatterPlot(count_result)
 		color = d3.scale.ordinal()
 			//this assumes you have 3 groups of data//﻿each of the domains corresponds to a color set
 	        .domain(["DEP", "RCF"])
-	        .range(["blue", "red"]);
+	        .range(["#66CDAA", "#EE82EE"]);
 	    // hoặc color = d3.scale.category10(); //tham khảo link https://github.com/d3/d3-scale/blob/master/README.md#schemeCategory10
 	 
 	  // don't want dots overlapping axis, so add in buffer to data domain
@@ -141,7 +139,7 @@ function ScatterPlot(count_result)
 	var zoomBeh = d3.behavior.zoom()
       						.x(xScale)
       						.y(yScale)
-      						.scaleExtent([0, 40])
+      						.scaleExtent([0, 2200])
       						.on("zoom", zoom);
 
     // add the graph canvas to the body of the webpage
@@ -149,6 +147,7 @@ function ScatterPlot(count_result)
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	    .call(zoomBeh)
+	    .attr("cursor", "pointer")
 	  	.append("g")
 	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")"); //=> xác định vị trí của svg (điểm bên trái trên svg = góc margin.left và margin.top 
 	   
@@ -203,7 +202,7 @@ function ScatterPlot(count_result)
 	      .data(count_result)
 	      .enter().append("circle")
 	      .attr("class", "dot")
-	      .attr("r", 3)
+	      .attr("r", 4)
 	      .attr("transform", transform)
 	      // .attr("cx", xMap)
 	      // .attr("cy", yMap)
@@ -266,15 +265,16 @@ function ScatterPlot(count_result)
 
 	function clickButton()
 	{
+		
 		xScale.domain([d3.min(count_result, xValue)-1, d3.max(count_result, xValue)+1]);
 	  	yScale.domain([d3.min(count_result, yValue)-1, d3.max(count_result, yValue)+1]);
-	  	xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+		svg.selectAll(".dot")
+	        .attr("transform", transform); 
+
+	    xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 	  	yAxis = d3.svg.axis().scale(yScale).orient("left");
 	  	svg.select(".x.axis").call(xAxis);
 	    svg.select(".y.axis").call(yAxis);
-
-		svg.selectAll(".dot")
-	        .attr("transform", transform); 
 	}
 }
 

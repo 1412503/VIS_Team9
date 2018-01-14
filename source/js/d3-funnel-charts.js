@@ -1,3 +1,7 @@
+// var color = d3.scale.ordinal()
+//                       .range(["#006F94","#0099BC", "#00BCF2", "#31D2F7", "#69EAFF"]);
+
+
 (function(){
   var DEFAULT_HEIGHT = 400,
       DEFAULT_WIDTH = 600,
@@ -39,9 +43,11 @@
     return this.data[ind][1];
   };
 
+
   window.FunnelChart.prototype._getColor = function(ind){
     /* Get engagement value of a category at index 'ind' in this.data */
-    return this.data[ind][3];
+    return this.data[ind][4];
+    //return color(ind);
   };
 
   window.FunnelChart.prototype._createPaths = function(){
@@ -134,6 +140,7 @@
       //console.log("ntt", funnel.totalEngagement);
       var g = funnelSvg.append("g")
                         .attr("class", "funnel")
+                        .attr("cursor", "pointer")
                         .on("mouseover", function(d){
                             d3.select(this).select("path")
                               .transition()
@@ -150,7 +157,7 @@
                               tooktipFunnel.html("<strong>Service:</strong>" + d3.select(this).select("#label").attr("value") + "</br>"
                                             +"<strong>Count:</strong>"+ d3.select(this).select("#value").attr("value"))
                                       .style("left", (d3.event.pageX) + "px")   
-                                      .style("top", (d3.event.pageY) - 113 + "px"); 
+                                      .style("top", (d3.event.pageY) - 45 + "px"); 
                         })
                         .on("mouseout", function(d)
                         {
@@ -189,7 +196,7 @@
      
       g.append('text')
                 //.text(funnel._getLabel(i) + ': ' + funnel._getEngagementCount(i))
-                .text(Math.round(funnel._getEngagementCount(i)/funnel.totalEngagement*100*10)/10 + "%")
+                .text(funnel._getLabel(i) + ':' + " "+ Math.round(funnel._getEngagementCount(i)/funnel.totalEngagement*100*10)/10 + "%")
                 .attr("x", function(d){ return funnel.width/2; })
                 .attr("y", function(d){
                   return (paths[i][0][1] + paths[i][1][1])/2;}) // Average height of bases

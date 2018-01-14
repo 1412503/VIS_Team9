@@ -1,9 +1,9 @@
-d3.csv("data/Cargo_Statistic.csv", function(data){
-	data.forEach(function(d){
-		d["Duration"] = +d["Duration"];
-	})
-	console.log(data)
-})
+// d3.csv("data/Cargo_Statistic.csv", function(data){
+// 	data.forEach(function(d){
+// 		d["Duration"] = +d["Duration"];
+// 	})
+// 	console.log(data)
+// })
 
 
 
