@@ -106,11 +106,7 @@ function Histogram(data, idchart, color)
 	      .append("text")
 	      .attr("class", "label")
 	      .attr("transform", "rotate(-90)")
-<<<<<<< HEAD
 	      .attr("y", -50)
-=======
-	      .attr("y", -70)
->>>>>>> 6072c2a70cb612f49441e9daeec9afc101fbb9e7
 	      .attr("dy", ".71em")
 	      .style("text-anchor", "end")
 	      .style("font-size", "10px")
