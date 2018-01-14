@@ -207,6 +207,18 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 			d3.select("#chart-05")
 					.selectAll("svg")
 					.remove();
+			d3.select("#chart-11")
+					.style("opacity", 1)
+					.style("pointer-events", "visible")
+				d3.select("#chart-12")
+					.style("opacity", 1)
+					.style("pointer-events", "visible");
+				d3.select("#chart-13")
+					.style("opacity", 1)
+					.style("pointer-events", "visible");
+				d3.select("#chart-14")
+					.style("opacity", 1)
+					.style("pointer-events", "visible");
 
 			if (d3.select(this).attr("id") == "RCS" && d3.select(this).property('checked') == true)
 			{
@@ -275,16 +287,16 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 				Histogram(data_all_late, "#chart-04", color2);
 				d3.select("#chart-11")
 					.style("opacity", 1)
-					.style("pointer-events", "visiable")
+					.style("pointer-events", "visible")
 				d3.select("#chart-12")
 					.style("opacity", 1)
-					.style("pointer-events", "visiable");
+					.style("pointer-events", "visible");
 				d3.select("#chart-13")
 					.style("opacity", 1)
-					.style("pointer-events", "visiable");
+					.style("pointer-events", "visible");
 				d3.select("#chart-14")
 					.style("opacity", 1)
-					.style("pointer-events", "visiable");
+					.style("pointer-events", "visible");
 				ScatterPlot(count_result);
 			}
 
