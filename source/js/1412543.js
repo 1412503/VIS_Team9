@@ -166,86 +166,7 @@ function Load_PieChart(data)
 								.style("opacity", 0);
 
 			     	});
-			  //    	.on("click", function(d)
-			  //    	{
-			  //    		count_click++;
-					// 	if (count_click == 1)
-					// 	{
-					// 		d3.selectAll(".arc").style("opacity", 0.1).style("pointer-events", "none");
-					// 		d3.select(this).style("opacity", 1.0).style("pointer-events", "visible");
-
-				 //        //Khi click vào phần nào của pie chart thì hiển thị thông tin tương ứng của chart đó bên phải
-				 //        if (d.data[0] == "Sớm")
-				 //        {
-				 //        	d3.select("#chart-12")
-				 //        		.style("opacity", 0.1)
-				 //        		.style("pointer-events", "none")
-
-				 //        		//.selectAll(".arc")
-				 //        		//.on('click', false);
-				 //        		//.classed("hide", true);
-				 //        	d3.select("#chart-13")
-				 //        		.style("opacity", 0.1)
-				 //        		.style("pointer-events", "none");
-				 //        	d3.select("#chart-04")
-				 //        		.style("opacity", 0.1)
-				 //        		.style("pointer-events", "none");
-				 //        }
-				 //       	else if (d.data[0] == "Trễ")
-				 //       	{
-				 //       		d3.select("#chart-11")
-				 //        		.style("opacity", 0.1)
-				 //        		.style("pointer-events", "none");
-				 //        	d3.select("#chart-13")
-				 //        		.style("opacity", 0.1)
-				 //        		.style("pointer-events", "none");
-				 //        	d3.select("#chart-03")
-				 //        		.style("opacity", 0.1)
-				 //        		.style("pointer-events", "none");
-				 //       	}
-				 //        else 
-				 //        { 
-				 //        	d3.select("#chart-11")
-				 //        		.style("opacity", 0.1)
-				 //        		.style("pointer-events", "none");
-				 //        	d3.select("#chart-12")
-				 //        		.style("opacity", 0.1)
-				 //        		.style("pointer-events", "none");
-				 //        }
-					// }
-					// else if (count_click == 2)
-					// {
-					// 	d3.selectAll(".arc")
-					// 		.style("opacity",1.0)
-					// 		.style("pointer-events", "visible")
-					// 		.select("path")
-					// 		.transition()
-					// 		.duration(500)
-					// 		.attr("d", arc);
-					// 	count_click = 0;
-
-					// 	// //Bỏ tooltip
-					// 	// tooktip.style("opacity", 0);
-
-					// 	//Bỏ làm mờ các chart bên phải
-					// 	d3.select("#chart-11")
-				 //        		.style("opacity", 1)
-				 //        		.style("pointer-events", "visible");
-					// 	d3.select("#chart-12")
-				 //        		.style("opacity", 1)
-				 //        		.style("pointer-events", "visible");
-					// 	d3.select("#chart-13")
-				 //        		.style("opacity", 1)
-				 //        		.style("pointer-events", "visible");
-				 //       	d3.select("#chart-03")
-				 //        		.style("opacity", 1)
-				 //        		.style("pointer-events", "visible");
-				 //        d3.select("#chart-04")
-				 //        		.style("opacity", 1)
-				 //        		.style("pointer-events", "visible");
-					// }
-			  //    }); 
-
+			     	
 	arcs.append("path")
 		.attr("d", arc) // here the arc function works on every record d of data 
 		.attr("fill", function(d){ return d.data[2];})
@@ -315,7 +236,7 @@ function LegendForPie(data)
 
 	legend.append("text")
 		.text(function(d){return d[0]})
-		.style("font-size", 12)
+		.style("font-size", 11)
 		.style("margin-top", 5)
 		.attr("x", 10)
 		.attr("y", 10);

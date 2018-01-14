@@ -186,20 +186,10 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 
 
 
-	//Load funnel chart with status = "late"
-	// Load_FunnelChartLate(array_late_status);
-	//Load funnel chart with status = "ontime"
-	// Load_FunnelChartOnTime(array_ontime_status);
-	//Load legend
-	// LegendForFunnel(array_early_status);
+
 
 	// Histogram số lượng chuyến sớm theo thời gian
 	Histogram(data_all_early, "#chart-03", color1);
-	// Histogram số lượng chuyến trễ của rcs
-	// Histogram(data_all_late_rcs, "#chart-04", color2);
-
-	// Histogram số lượng chuyến sớm của rcs
-	//Histogram(data_all_early_rcs, "#chart-03", color1);
 
 	 //Histogram số lượng chuyến trễ theo thời gian
 	Histogram(data_all_late, "#chart-04", color2);
@@ -299,5 +289,4 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 			}
 
 		})
-		//d3.select("#RCS")
 });

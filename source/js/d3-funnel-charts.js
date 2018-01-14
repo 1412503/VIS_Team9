@@ -1,5 +1,3 @@
-// var color = d3.scale.ordinal()
-//                       .range(["#006F94","#0099BC", "#00BCF2", "#31D2F7", "#69EAFF"]);
 var count_click_Funnel = 0;
 
 (function(){
@@ -223,45 +221,16 @@ var count_click_Funnel = 0;
 
     function clickOnFunnelChart(d)
     {
-      //console.log("ntt: ", d3.select(this).select("#label").attr("value"));
       count_click_Funnel++;
       if (count_click_Funnel == 1)
       {
          d3.selectAll(".funnel").style("opacity", "0.2").style("pointer-events", "none");
-          //d3.select(this.parentNode).selectAll(".funnel").style("opacity", "0.2");
-          //d3.select("#chart-11").selectAll(".funnel").style("opacity", "0.2");
-         d3.select(this).style("opacity", 1).style("pointer-events", "visible");
-          //console.log("click:", d3.select(this.parentNode.parentNode.parentNode).attr("id") == "funnelContainer");
-          // if (d3.select(this.parentNode.parentNode.parentNode).attr("id") == "funnelContainer")
-          // {
-          //     //d3.selectAll(".arc").style("opacity", 0.1);
-          //     d3.select("#chart-01").select(".arc:nth-child(1)")
-          //       //.select("path:nth-child(1)")
-          //       //.transition()
-          //       //.duration(500)
-          //       //.style("filter", "url(#drop-shadow)")
-          //       //.attr("stroke-width", 2)
-          //       .style("opacity", 0.2);
-          // }                                                            
-
-          // //Lấy thông tin phân pie khi click vào
-          // tooktipFunnel.transition()    
-          //        .duration(100)  
-          //        .style("opacity", 0.9);
-
-          // tooktipFunnel.html("<strong>Service:</strong>" + d3.select(this).select("#label").attr("value") + "</br>"
-          //               +"<strong>Count:</strong>"+ d3.select(this).select("#value").attr("value"))
-          //         .style("left", (d3.event.pageX) + "px")   
-          //         .style("top", (d3.event.pageY) - 113 + "px"); 
+         d3.select(this).style("opacity", 1).style("pointer-events", "visible");   
       }
       else
       {
           d3.selectAll(".funnel").style("opacity", 1).style("pointer-events", "visible");
-          //d3.select(this.parentNode).selectAll(".funnel").style("opacity", 1);
           count_click_Funnel = 0;
-          // tooktipFunnel.style("opacity", 0);
-          // d3.select("#chart-01").selectAll(".arc")
-          //       .style("opacity", 1);
       }
     }
 
