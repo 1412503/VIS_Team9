@@ -1,59 +1,83 @@
+var color = "#D47300";
+
 function Histogram(data, idchart)
 {
-	var map = data.map(function(i) {return parseInt(i.Duration); })
+	var map = data.map(function(i) {return (parseInt(i.Duration)/1440); })
+
+	var formatCount = d3.format(",.0f");
+
+	var margin = {top: 20, right: 30, bottom: 30, left: 30},
+		width = $(idchart).width() - margin.left - margin.right,
+		height = 0.6*width - margin.top - margin.bottom;
+
+	var max = d3.max(map);
+	var min = d3.min(map);
+
+	var x = d3.scale.linear()
+    		.domain([min, max])
+      		.range([0, width]);
 
 	var histogram = d3.layout.histogram()
-					.bins(20)
-					(map)				
+    				.bins(x.ticks(20))
+    				(map);
 
-	var width = $(idchart).width(),
-	height = width,
-    padding = 50;
+    var yMax = d3.max(histogram, function(d){return d.length});
+	var yMin = d3.min(histogram, function(d){return d.length});			
 
+	var colorScale = d3.scale.linear()
+            		.domain([yMin, yMax])
+            		.range([d3.rgb(color).brighter(), d3.rgb(color).darker()]);
+    
     var y = d3.scale.linear()
-    		.domain([0, d3.max(histogram.map(function(i) {return i.length;}))])
-    		.range([0, height]);
+    		.domain([0, yMax])
+   			.range([height, 0]);
 
-    var x = d3.scale.linear()
-    		.domain([0, d3.max(map)])
-    		.range([0, width]);
+   	var xAxis = d3.svg.axis()
+    	.scale(x)
+    	.orient("bottom");
 
-    var xAxis = d3.svg.axis()
-    			.scale(x)
-    			.orient("bottom");
+    var svg = d3.select(idchart).append("svg")
+    			.attr("width", width + margin.left + margin.right)
+    			.attr("height", height + margin.top + margin.bottom)
+  				.append("g")
+    			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var svg = d3.select(idchart).append("svg")
-				.attr("width", width)
-				.attr("height", height + padding)
-				.append("g")
-				.attr("transform", "translate(20,0)");
+	var bar = svg.selectAll(".bar")
+    			.data(histogram)
+  				.enter().append("g")
+    			.attr("class", "bar")
+    			.attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });   
 
-	var group = svg.append("g")
-				.attr("transform", "translate(0," + height +")")
-				.call(xAxis);
+    bar.append("rect")
+		.attr("x", 1)
+		.attr("width", (x(histogram[0].dx) - x(0)) - 1)
+		.attr("height", function (d) { return height - y(d.y); })
+		.attr("fill", function(d) { return colorScale(d.y) })
 
-	var bars = svg.selectAll(".bar")
-		.data(histogram)
-		.enter()
-		.append("g");
-
-	bars.append("rect")
-		.attr("x", function (d) { return x(d.x);})
-		.attr("y", function (d) {return width - y(d.y);})
-		.attr("width", function (d) { return x(d.dx); })
-		.attr("height", function (d) { return y(d.y); })
-		.attr("fill", "steelblue")
-
-	bars.append("text")
-		.attr("x", function (d) { return x(d.x);})
-		.attr("y", function (d) {return width - y(d.y);})
-		.attr("dy", "20px")
-		.attr("dx", function (d) { return x(d.dx)/2;})
-		.attr("fill", "#fff")
+	bar.append("text")
+		.attr("x", (x(histogram[0].dx) - x(0)) / 2)
+		.attr("y", -12)
+		.attr("dy", ".75em")
+		.attr("fill", "black")
 		.attr("text-anchor", "middle")
-		.text(function (d) { return d.y;})	
-};
+		.text(function(d) { return formatCount(d.y); })
 
+    svg.append("g")
+	    .attr("class", "x axis")
+	    .attr("transform", "translate(0," + height + ")")
+	    .call(xAxis);
+
+	svg.append("g")
+		.attr("transform", "translate(0," + height + ")")
+		.call(xAxis)
+		.attr("class", "label")
+	    .attr("x", width)
+	    .attr("y", 12)
+	    .style("text-anchor", "end")
+	    .style("font-size", "14px")
+	    .text("Thời gian trễ (ngày)");
+
+};
 
 d3.csv("data/Cargo_Statistic.csv", function(error, data){
 	if (error)
@@ -109,7 +133,36 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data){
 		return row['Service'] == 4;
 	})
 	
-		Histogram(data_all_early_rcs, "#chart-03");
-		Histogram(data_all_late_rcs, "#chart-04");
+	// Histogram số lượng chuyến sớm theo thời gian
+	//Histogram(data_all_early, "#chart-03");
+
+	// Histogram số lượng chuyến sớm của rcs
+	//Histogram(data_all_early_rcs, "#chart-03");
+
+	// Histogram số lượng chuyến sớm theo dep
+	//Histogram(data_all_early_dep, "#chart-03");
+
+	// Histogram số lượng chuyến sớm theo rcf
+	//Histogram(data_all_early_rcf, "#chart-03");
+
+	// Histogram số lượng chuyến sớm theo dlv
+	Histogram(data_all_early_dlv, "#chart-03");
+
+
+	/* //Histogram số lượng chuyến trễ theo thời gian
+	Histogram(data_all_late, "#chart-04");
+
+	// Histogram số lượng chuyến trễ của rcs
+	Histogram(data_all_late_rcs, "#chart-04");
+
+	// Histogram số lượng chuyến trễ theo dep
+	Histogram(data_all_late_dep, "#chart-04");
+
+	// Histogram số lượng chuyến trễ theo rcf
+	Histogram(data_all_late_rcf, "#chart-04");
+
+	// Histogram số lượng chuyến trễ theo dlv
+	Histogram(data_all_late_dlv, "#chart-04");*/
 
 });
+
