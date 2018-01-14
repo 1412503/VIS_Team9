@@ -7,7 +7,7 @@ function ScatterPlot(count_result)
 {
 	var w = $('#chart-05').width();
 	h = 0.3*w
-	var margin = {top: 20, right: 0.1*w, bottom: 30, left:  0.1*w},
+	var margin = {top: 10, right: 0.1*w, bottom: 30, left:  0.1*w},
 	    width = w - margin.left - margin.right,
 	    height = h - margin.top - margin.bottom;
 
@@ -61,7 +61,7 @@ function ScatterPlot(count_result)
 	      .attr("x", width) //vị trí của text so với gốc tọa độ
 	      .attr("y", -6) //vị trí text so với trục tọa độ (-) nằm bên trái, (+) nằm bên phải
 	      .style("text-anchor", "end") //kết thúc của text là điểm (gồm: start/middle/end)
-	      .style("font-size", "14px")
+	      .style("font-size", "10px")
 	      .text("Số lượng đến sân bay");
 
 	  // y-axis
@@ -74,7 +74,7 @@ function ScatterPlot(count_result)
 	      .attr("y", -50) //vị trí text so với trục tọa độ (-) nằm bên trái, (+) nằm bên phải
 	      .attr("dy", ".71em") //vị trí của text so với gốc tọa độ
 	      .style("text-anchor", "end") //kết thúc của text là điểm (gồm: start/middle/end)
-	      .style("font-size", "14px")
+	      .style("font-size", "10px")
 	      .text("Tỉ lệ trễ (%)");
 
 	var objects = svg.append("svg")

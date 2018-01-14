@@ -7,9 +7,9 @@ function Histogram(data, idchart, color)
 
 	var formatCount = d3.format(",.0f");
 
-	var margin = {top: 20, right: 30, bottom: 50, left: 80},
+	var margin = {top: 12, right: 0, bottom: 40, left: 50},
 		width = $(idchart).width() - margin.left - margin.right,
-		height = 0.6*width - margin.top - margin.bottom;
+		height = 0.9*width - margin.top - margin.bottom;
 
 	var max = d3.max(map);
 	var min = d3.min(map);
@@ -97,7 +97,7 @@ function Histogram(data, idchart, color)
 	      .attr("x", width)
 	      .attr("y", 35)
 	      .style("text-anchor", "end")
-	      .style("font-size", "14px")
+	      .style("font-size", "10px")
 	      .text("Thời gian (ngày)");
 
 	svg.append("g")
@@ -106,10 +106,14 @@ function Histogram(data, idchart, color)
 	      .append("text")
 	      .attr("class", "label")
 	      .attr("transform", "rotate(-90)")
+<<<<<<< HEAD
+	      .attr("y", -50)
+=======
 	      .attr("y", -70)
+>>>>>>> 6072c2a70cb612f49441e9daeec9afc101fbb9e7
 	      .attr("dy", ".71em")
 	      .style("text-anchor", "end")
-	      .style("font-size", "14px")
+	      .style("font-size", "10px")
 	      .text("Số lượng chuyến");
 
 };
