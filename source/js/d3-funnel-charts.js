@@ -1,6 +1,6 @@
 // var color = d3.scale.ordinal()
 //                       .range(["#006F94","#0099BC", "#00BCF2", "#31D2F7", "#69EAFF"]);
-
+var count_click_Funnel = 0;
 
 (function(){
   var DEFAULT_HEIGHT = 400,
@@ -221,18 +221,16 @@
   };
 })();
 
-
-    var count = 0;
     function clickOnFunnelChart(d)
     {
       //console.log("ntt: ", d3.select(this).select("#label").attr("value"));
-      count++;
-      if (count == 1)
+      count_click_Funnel++;
+      if (count_click_Funnel == 1)
       {
          d3.selectAll(".funnel").style("opacity", "0.2").style("pointer-events", "none");
           //d3.select(this.parentNode).selectAll(".funnel").style("opacity", "0.2");
           //d3.select("#chart-11").selectAll(".funnel").style("opacity", "0.2");
-          d3.select(this).style("opacity", 1).style("pointer-events", "visible");
+         d3.select(this).style("opacity", 1).style("pointer-events", "visible");
           //console.log("click:", d3.select(this.parentNode.parentNode.parentNode).attr("id") == "funnelContainer");
           // if (d3.select(this.parentNode.parentNode.parentNode).attr("id") == "funnelContainer")
           // {
@@ -260,7 +258,7 @@
       {
           d3.selectAll(".funnel").style("opacity", 1).style("pointer-events", "visible");
           //d3.select(this.parentNode).selectAll(".funnel").style("opacity", 1);
-          count = 0;
+          count_click_Funnel = 0;
           // tooktipFunnel.style("opacity", 0);
           // d3.select("#chart-01").selectAll(".arc")
           //       .style("opacity", 1);
