@@ -42,6 +42,43 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 	{
 		return row['Status'] == -1;
 	})
+	//Som theo dep
+	var data_early_dep = data_dep.filter(function(row)
+	{
+		return row['Status'] == -1;
+	})
+	//Som theo rcf
+	var data_early_rcf = data_rcf.filter(function(row)
+	{
+		return row['Status'] == -1;
+	})
+	//Som theo dlv
+	var data_early_dlv = data_dlv.filter(function(row)
+	{
+		return row['Status'] == -1;
+	})
+
+	//TRE
+	// Lấy chuyến tre theo rcs
+	var data_late_rcs = data_rcs.filter(function(row)
+	{
+		return row['Status'] == 1;
+	})
+	//tre theo dep
+	var data_late_dep = data_dep.filter(function(row)
+	{
+		return row['Status'] == 1;
+	})
+	//tre theo rcf
+	var data_late_rcf = data_rcf.filter(function(row)
+	{
+		return row['Status'] == 1;
+	})
+	//tre theo dlv
+	var data_late_dlv = data_dlv.filter(function(row)
+	{
+		return row['Status'] == 1;
+	})
 	
 	//SCATTER PLOT
 	//---------------------SERVICE 2-----------------------
@@ -68,7 +105,9 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 					.entries(data_temp_s2);
 	// console.log("count_late_s2: ", count_late_s2)
 
-	var count_result = []
+	var count_result = [],
+		count_result1 = [],
+		count_result2 = [];
 	count_all_s2.forEach(function(value)
 	{
 		var exist = false
@@ -76,12 +115,14 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 		{
 			if(value.key == val.key){
 				count_result.push({"place": +value.key, "total": value.values, "count_late": val.values, "ratio_late": Math.round((val.values/value.values)*100), "type": "DEP" });
+				count_result1.push({"place": +value.key, "total": value.values, "count_late": val.values, "ratio_late": Math.round((val.values/value.values)*100), "type": "DEP" });
 				exist = true
 				return false //tương tự break
 			}
 		})
 		if(exist == false){
 			count_result.push({"place": +value.key, "total": value.values, "count_late": 0, "ratio_late": 0, "type": "DEP"  });
+			count_result1.push({"place": +value.key, "total": value.values, "count_late": 0, "ratio_late": 0, "type": "DEP"  });
 		}
 	});
 
@@ -116,14 +157,19 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 		{
 			if(value.key == val.key){
 				count_result.push({"place": +value.key, "total": value.values, "count_late": val.values, "ratio_late": Math.round((val.values/value.values)*100), "type": "RCF" });
+				count_result2.push({"place": +value.key, "total": value.values, "count_late": val.values, "ratio_late": Math.round((val.values/value.values)*100), "type": "RCF" });
 				exist = true
 				return false //tương tự break
 			}
 		})
 		if(exist == false){
-			count_result.push({"place": +value.key, "total": value.values, "count_late": 0, "ratio_late": 0, "type": "RCF" });
+			count_result.push({"place": +value.key, "total": value.values, "count_late": 0, "ratio_late": 0, "type": "RCF" })
+			count_result2.push({"place": +value.key, "total": value.values, "count_late": 0, "ratio_late": 0, "type": "RCF"  });;
 		}
 	});
+	console.log("count_result", count_result);
+	console.log("count_result1", count_result1);
+	console.log("count_result2", count_result2);
 	// console.log("count_result_s3: ", count_result_s3)
 	//------------------END SERVICE 4------------------------------------
 	
@@ -157,10 +203,101 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 
 	 //Histogram số lượng chuyến trễ theo thời gian
 	Histogram(data_all_late, "#chart-04", color2);
-
-	
-
-	
-
 	ScatterPlot(count_result);
+
+	d3.selectAll("input")
+		.on("change", function(d)
+		{
+			d3.select("#chart-03")
+					.selectAll("svg")
+					.remove();
+			d3.select("#chart-04")
+					.selectAll("svg")
+					.remove();
+			d3.select("#chart-05")
+					.selectAll("svg")
+					.remove();
+
+			if (d3.select(this).attr("id") == "RCS" && d3.select(this).property('checked') == true)
+			{
+				Histogram(data_early_rcs, "#chart-03", color1);
+				Histogram(data_late_rcs, "#chart-04", color2);
+				d3.select("#chart-12")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				d3.select("#chart-13")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				d3.select("#chart-14")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				ScatterPlot(count_result);
+			}
+			else if (d3.select(this).attr("id") == "DEP" && d3.select(this).property('checked') == true)
+			{
+				Histogram(data_early_dep, "#chart-03", color1);
+				Histogram(data_late_dep, "#chart-04", color2);
+				d3.select("#chart-11")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				d3.select("#chart-13")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				d3.select("#chart-14")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				ScatterPlot(count_result1);
+
+			}
+			else if (d3.select(this).attr("id") == "RCF" && d3.select(this).property('checked') == true)
+			{
+				Histogram(data_early_rcf, "#chart-03", color1);
+				Histogram(data_late_rcf, "#chart-04", color2);
+				d3.select("#chart-11")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				d3.select("#chart-12")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				d3.select("#chart-14")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				ScatterPlot(count_result2);
+			}
+			else if (d3.select(this).attr("id") == "DLV" && d3.select(this).property('checked') == true)
+			{
+				Histogram(data_early_dlv, "#chart-03", color1);
+				Histogram(data_late_dlv, "#chart-04", color2);
+				d3.select("#chart-11")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				d3.select("#chart-12")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				d3.select("#chart-13")
+					.style("opacity", 0.2)
+					.style("pointer-events", "none");
+				ScatterPlot(count_result);
+			}
+			else
+			{
+				Histogram(data_all_early, "#chart-03", color1);
+				Histogram(data_all_late, "#chart-04", color2);
+				d3.select("#chart-11")
+					.style("opacity", 1)
+					.style("pointer-events", "visiable")
+				d3.select("#chart-12")
+					.style("opacity", 1)
+					.style("pointer-events", "visiable");
+				d3.select("#chart-13")
+					.style("opacity", 1)
+					.style("pointer-events", "visiable");
+				d3.select("#chart-14")
+					.style("opacity", 1)
+					.style("pointer-events", "visiable");
+				ScatterPlot(count_result);
+			}
+
+		})
+		//d3.select("#RCS")
 });

@@ -3,7 +3,7 @@ var pie_width = $('.col-sm-3').width();
 
 var	funnel_width = $('.col-sm-3').width();
 var width_funnel = 0.45*funnel_width,
-	height_funnel = 0.4*funnel_width;
+	height_funnel = 0.3*funnel_width;
 //color
 var colorPie = d3.scale.ordinal()
 						.range(["#D47300","#00AE56", "#00CED1", ]);
@@ -296,25 +296,27 @@ function LegendForPie(data)
 	var svgLegend = d3.select("#chart-01-legend")
 					.append("svg")
 					.attr("width", 0.26*pie_width)
-					.attr("height", 0.5*pie_width);
+					.attr("height", 0.4*pie_width);
 
 	var legend = svgLegend.selectAll(".legendPie")
 						.data(data)
 						.enter()
 						.append("g")
 						.attr("transform", function(d,i){
-						    return "translate(" + 20 + "," + (i * 15 + 20) + ")"; // place each legend on the right and bump each one down 15 pixels
+						    return "translate(" + 15 + "," + (i * 18 + 20) + ")"; // place each legend on the right and bump each one down 15 pixels
 						  })
 						.attr("class", "legendPie");
 
 	legend.append("rect")
 			.attr("width", 10)
 			.attr("height", 10)
+			.style("margin-top", 5)
 			.attr("fill", function(d){ return d[2];});
 
 	legend.append("text")
 		.text(function(d){return d[0]})
 		.style("font-size", 12)
+		.style("margin-top", 5)
 		.attr("x", 10)
 		.attr("y", 10);
 }
@@ -533,4 +535,7 @@ function LegendForFunnel(data)
 		.attr("y", 10);
 }
 
+$('input[type="checkbox"]').on('change', function () {
+ 	$('input[type="checkbox"]').not(this).prop('checked', false);			
+});
 
