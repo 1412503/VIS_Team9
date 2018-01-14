@@ -46,8 +46,8 @@ var count_click_Funnel = 0;
 
   window.FunnelChart.prototype._getColor = function(ind){
     /* Get engagement value of a category at index 'ind' in this.data */
-    return this.data[ind][3];
-    //return color(ind);
+    return this.data[ind][2];
+    // return colorPie(ind);
   };
 
   window.FunnelChart.prototype._createPaths = function(){

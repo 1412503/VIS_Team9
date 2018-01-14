@@ -7,6 +7,9 @@ var width_funnel = 0.2*funnel_width,
 //color
 var colorPie = d3.scale.ordinal()
 						.range(["#D47300","#00AE56", "#00CED1", ]);
+var colorLate = "#D47300",
+	colorEarly = "#00AE56",
+	colorOnTime = "#00CED1";
 
 //Xác định tooktip để hiển thị thông tin tree khi rê chuột vào pie chart
 var tooktip = d3.select("#chart-01")
@@ -23,6 +26,35 @@ var count_click = 0; //Tạo biến đếm click
 
 function Load_PieChart(data)
 {
+	var server_gb_status = d3.nest()
+								.key(function(d) {return d.Status;})//(d.Service != 0) ? d.Service : null
+								//.sortKeys(d3.descending)
+								.rollup(function(v) { 
+									//return d3.sum(v, function(d){ return d.status});
+									return v.length;
+								})
+								.entries(data);
+	var result = [];
+	server_gb_status.forEach(function(d){
+		if (d.key == 0)
+		{
+			d.key = "Đúng giờ";
+			result.push([d.key, d.values, colorOnTime]);
+		}
+		else if (d.key == -1)
+		{
+			d.key = "Sớm";
+			result.push([d.key, d.values, colorEarly]);
+		}
+		else
+		{
+			d.key = "Trễ";
+			result.push([d.key, d.values, colorLate]);
+		}
+
+	})
+	data = result;
+
 	var width = 0.5*pie_width,
 		height = width,
 		radius = (width-50)/2;
@@ -232,6 +264,35 @@ function Load_PieChart(data)
 
 function LegendForPie(data)
 {
+	var server_gb_status = d3.nest()
+								.key(function(d) {return d.Status;})//(d.Service != 0) ? d.Service : null
+								//.sortKeys(d3.descending)
+								.rollup(function(v) { 
+									//return d3.sum(v, function(d){ return d.status});
+									return v.length;
+								})
+								.entries(data);
+	var result = [];
+	server_gb_status.forEach(function(d){
+		if (d.key == 0)
+		{
+			d.key = "Đúng giờ";
+			result.push([d.key, d.values, colorOnTime]);
+		}
+		else if (d.key == -1)
+		{
+			d.key = "Sớm";
+			result.push([d.key, d.values, colorEarly]);
+		}
+		else
+		{
+			d.key = "Trễ";
+			result.push([d.key, d.values, colorLate]);
+		}
+
+	})
+	data = result;
+
 	var svgLegend = d3.select("#chart-01-legend")
 					.append("svg")
 					.attr("width", 0.2*pie_width)
@@ -249,32 +310,56 @@ function LegendForPie(data)
 	legend.append("rect")
 			.attr("width", 10)
 			.attr("height", 10)
-			.attr("fill", function(d, i){ return colorPie(i);});
+			.attr("fill", function(d){ return d[2];});
 
 	legend.append("text")
-		.text(function(d){ 
-			if (d[0] == 1)
-				d[0] = "Trễ";
-			else if (d[0] == 0)
-				d[0] = "Đúng giờ";
-			else
-				d[0] = "Sớm";
-			return d[0];
-		})
+		.text(function(d){return d[0]})
 		.style("font-size", 12)
 		.attr("x", 10)
 		.attr("y", 10);
 }
 
-function Load_FunnelChartEarly(data)
+function Load_FunnelChartRCS(data)
 {
+	var server_gb_status = d3.nest()
+								.key(function(d) {return d.Status;})//(d.Service != 0) ? d.Service : null
+								//.sortKeys(d3.descending)
+								.rollup(function(v) { 
+									//return d3.sum(v, function(d){ return d.status});
+									return v.length;
+								})
+								.entries(data);
+	var result = [];
+	server_gb_status.forEach(function(d){
+		if (d.key == 0)
+		{
+			d.key = "Đúng giờ";
+			result.push([d.key, d.values, colorOnTime]);
+		}
+		else if (d.key == -1)
+		{
+			d.key = "Sớm";
+			result.push([d.key, d.values, colorEarly]);
+		}
+		else
+		{
+			d.key = "Trễ";
+			result.push([d.key, d.values, colorLate]);
+		}
+
+	});
+	result.sort(function(x, y){
+   		return d3.descending(x[1], y[1]);
+	})
+	// console.log("test funnel chart", server_gb_status);
+	
 
 	var svg = d3.select("#chart-11")
 				.append("div")
 				.attr("id", "funnelContainer");
 
 	var chart = new FunnelChart({
-	    			data: data,
+					data: result,
 	    			width: width_funnel, 
 	    			height: height_funnel, 
 	    			bottomPct: 1/4,
@@ -282,14 +367,45 @@ function Load_FunnelChartEarly(data)
 	chart.draw('#funnelContainer',2);
 }
 
-function Load_FunnelChartLate(data)
+function Load_FunnelChartDEP(data)
 {
+	var server_gb_status = d3.nest()
+								.key(function(d) {return d.Status;})//(d.Service != 0) ? d.Service : null
+								//.sortKeys(d3.descending)
+								.rollup(function(v) { 
+									//return d3.sum(v, function(d){ return d.status});
+									return v.length;
+								})
+								.entries(data);
+	var result = [];
+	server_gb_status.forEach(function(d){
+		if (d.key == 0)
+		{
+			d.key = "Đúng giờ";
+			result.push([d.key, d.values, colorOnTime]);
+		}
+		else if (d.key == -1)
+		{
+			d.key = "Sớm";
+			result.push([d.key, d.values, colorEarly]);
+		}
+		else
+		{
+			d.key = "Trễ";
+			result.push([d.key, d.values, colorLate]);
+		}
+
+	})
+	result.sort(function(x, y){
+   		return d3.descending(x[1], y[1]);
+	})
+
 	var svg = d3.select("#chart-12")
 				.append("div")
 				.attr("id", "funnelContainer1");
 
 	var chart = new FunnelChart({
-	    			data: data,
+	    			data: result,
 	    			width: width_funnel, 
 	    			height: height_funnel, 
 	    			bottomPct: 1/4
@@ -297,21 +413,97 @@ function Load_FunnelChartLate(data)
 	chart.draw('#funnelContainer1',2);
 }
 
-function Load_FunnelChartOnTime(data)
+function Load_FunnelChartRCF(data)
 {
+	var server_gb_status = d3.nest()
+								.key(function(d) {return d.Status;})//(d.Service != 0) ? d.Service : null
+								//.sortKeys(d3.descending)
+								.rollup(function(v) { 
+									//return d3.sum(v, function(d){ return d.status});
+									return v.length;
+								})
+								.entries(data);
+	var result = [];
+	server_gb_status.forEach(function(d){
+		if (d.key == 0)
+		{
+			d.key = "Đúng giờ";
+			result.push([d.key, d.values, colorOnTime]);
+		}
+		else if (d.key == -1)
+		{
+			d.key = "Sớm";
+			result.push([d.key, d.values, colorEarly]);
+		}
+		else
+		{
+			d.key = "Trễ";
+			result.push([d.key, d.values, colorLate]);
+		}
+
+	})
+	result.sort(function(x, y){
+   		return d3.descending(x[1], y[1]);
+	})
+
 	var svg = d3.select("#chart-13")
 				.append("div")
-				.attr("id", "funnelContainer3");
+				.attr("id", "funnelContainer2");
 
 	var chart = new FunnelChart({
-	    			data: data,
+	    			data: result,
+	    			width: width_funnel, 
+	    			height: height_funnel, 
+	    			bottomPct: 1/4,
+	    			});
+	chart.draw('#funnelContainer2',2);
+}
+
+function Load_FunnelChartDLV(data)
+{
+	var server_gb_status = d3.nest()
+								.key(function(d) {return d.Status;})//(d.Service != 0) ? d.Service : null
+								//.sortKeys(d3.descending)
+								.rollup(function(v) { 
+									//return d3.sum(v, function(d){ return d.status});
+									return v.length;
+								})
+								.entries(data);
+	var result = [];
+	server_gb_status.forEach(function(d){
+		if (d.key == 0)
+		{
+			d.key = "Đúng giờ";
+			result.push([d.key, d.values, colorOnTime]);
+		}
+		else if (d.key == -1)
+		{
+			d.key = "Sớm";
+			result.push([d.key, d.values, colorEarly]);
+		}
+		else
+		{
+			d.key = "Trễ";
+			result.push([d.key, d.values, colorLate]);
+		}
+
+	})
+	result.sort(function(x, y){
+   		return d3.descending(x[1], y[1]);
+	})
+
+	var svg = d3.select("#chart-13")
+				.append("div")
+				.attr("id", "funnelContainer2");
+
+	var chart = new FunnelChart({
+	    			data: result,
 	    			width: width_funnel, 
 	    			height: height_funnel, 
 	    			bottomPct: 1/4,
 	    			});
 	chart.draw('#funnelContainer3',2);
 }
-
 
 function LegendForFunnel(data)
 {
