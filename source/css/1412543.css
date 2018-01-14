@@ -67,5 +67,8 @@ div.tooltip
 	height: 450px;
 }
 
+.tick{
+	font-size: 9px !important;
+}
 
 
