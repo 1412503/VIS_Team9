@@ -12,12 +12,12 @@ var colorLate = "#ff944d",
 	colorOnTime = "#00CED1";
 
 //Xác định tooktip để hiển thị thông tin tree khi rê chuột vào pie chart
-var tooktip = d3.select("#chart-01")
+var tooktip = d3.select("body")
 				.append("div")	
 		    	.attr("class", "tooltip")				
 		    	.style("opacity", 0);
 
-var tooktipFunnel = d3.select("#chart-01")
+var tooktipFunnel = d3.select("body")
 				.append("div")	
 		    	.attr("class", "tooltip")				
 		    	.style("opacity", 0);
@@ -141,10 +141,10 @@ function Load_PieChart(data)
 			           			.duration(200)		
 			           			.style("opacity", 0.9);
 
-			    		tooktip.html("<strong> Status: </strong>"	+ d.data[0] + "</br>"
-			    				+"<strong> Count: </strong>"	+ d.data[1])
+			    		tooktip.html("<strong> Trạng thái: </strong>"	+ d.data[0] + "</br>"
+			    				+"<strong> Số lượng: </strong>"	+ d.data[1])
 			           			.style("left", (d3.event.pageX) + "px")		
-			           			.style("top", (d3.event.pageY) - 60 + "px")	
+			           			.style("top", (d3.event.pageY) - 40 + "px")	
 					})
 			     	.on("mouseout", function(d){
 			     	     d3.select(this).select("path")
