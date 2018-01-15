@@ -22,20 +22,16 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 		return row['Service'] == 4;
 	})
 
-	// Lấy tất cả chuyến sớm
-	var data_all_early = data.filter(function(row){
-		return row['Status'] == -1;
+	// Lấy tất cả chuyến trễ va som của all
+	var data_early_all = data_all.filter(function(row)
+	{
+		return row["Status"] == -1;
+	})
+	var data_late_all = data_all.filter(function(row)
+	{
+		return row["Status"] == 1;
 	})
 
-	console.log("data_all_early",data_all_early);
-	// Lấy tất cả chuyến trễ
-	var data_all_late = data.filter(function(row){
-		return row['Status'] == 1;
-	})
-
-	var data_all_ontime = data.filter(function(row){
-		return row['Status'] == 0;
-	})
 
 	// Lấy chuyến sớm theo rcs
 	var data_early_rcs = data_rcs.filter(function(row)
@@ -167,10 +163,6 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 			count_result2.push({"place": +value.key, "total": value.values, "count_late": 0, "ratio_late": 0, "type": "RCF"  });;
 		}
 	});
-	console.log("count_result", count_result);
-	console.log("count_result1", count_result1);
-	console.log("count_result2", count_result2);
-	// console.log("count_result_s3: ", count_result_s3)
 	//------------------END SERVICE 4------------------------------------
 	
 	//Hien thi chart
@@ -184,15 +176,11 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 	Load_FunnelChartRCF(data_rcf);
 	Load_FunnelChartDLV(data_dlv);
 
-
-
-
-
 	// Histogram số lượng chuyến sớm theo thời gian
-	Histogram(data_all_early, "#chart-03", color1);
+	Histogram(data_early_all, "#chart-03", color1);
 
 	 //Histogram số lượng chuyến trễ theo thời gian
-	Histogram(data_all_late, "#chart-04", color2);
+	Histogram(data_late_all, "#chart-04", color2);
 	ScatterPlot(count_result);
 
 	d3.selectAll("input")
@@ -283,8 +271,8 @@ d3.csv("data/Cargo_Statistic.csv", function(error, data)
 			}
 			else
 			{
-				Histogram(data_all_early, "#chart-03", color1);
-				Histogram(data_all_late, "#chart-04", color2);
+				Histogram(data_early_all, "#chart-03", color1);
+				Histogram(data_late_all, "#chart-04", color2);
 				d3.select("#chart-11")
 					.style("opacity", 1)
 					.style("pointer-events", "visible")
