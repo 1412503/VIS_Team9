@@ -152,7 +152,7 @@ var count_click_Funnel = 0;
                                            .duration(100)  
                                            .style("opacity", 0.9);
 
-                              tooktipFunnel.html("<strong>Dịch vụ: </strong>" + d3.select(this).select("#label").attr("value") + "</br> <strong>Số lượng: </strong>"
+                              tooktipFunnel.html("<strong>Trạng thái: </strong>" + d3.select(this).select("#label").attr("value") + "</br> <strong>Số lượng: </strong>"
                                                                             + d3.select(this).select("#value").attr("value"))
                                       .style("left", (d3.event.pageX)- 10 + "px")   
                                       .style("top", (d3.event.pageY) - 40 + "px"); 
